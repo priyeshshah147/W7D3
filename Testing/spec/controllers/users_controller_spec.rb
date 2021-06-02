@@ -19,6 +19,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     describe 'POST#create' do
+
         context 'with valid params' do
             it "it will direct users to index on success" do
                 post :create, params: { user: { username: "Bruce", password: "password" }}
@@ -29,6 +30,14 @@ RSpec.describe UsersController, type: :controller do
                 user = User.find_by_username("Bruce")
                 expect(session[:session_token]).to eq(user.session_token)
             end
+        end
+
+        context 'with invalid params' do
+            it "should show new page" do
+                get :new
+                expect(response).to render_template('new')
+            end
+            
         end
     end
 end
